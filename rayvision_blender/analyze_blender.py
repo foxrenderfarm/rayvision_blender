@@ -10,6 +10,7 @@ import os
 import sys
 import time
 from builtins import str
+import threading
 
 from rayvision_blender.constants import PACKAGE_NAME
 from rayvision_log import init_logger
@@ -69,7 +70,7 @@ class AnalyzeBlender(object):
         self.plugin_config = plugin_config
 
         self.local_os = local_os if local_os else self.check_local_os()
-        self.tmp_mark = str(int(time.time()))
+        self.tmp_mark = str(int(time.time())) + str(self.get_current_id())
         workspace = os.path.join(self.check_workspace(workspace),
                                  self.tmp_mark)
         if not os.path.exists(workspace):
@@ -97,6 +98,13 @@ class AnalyzeBlender(object):
         self.task_info = {}
         self.asset_info = {}
         self.upload_info = {}
+
+    @staticmethod
+    def get_current_id():
+        if isinstance(threading.current_thread(), threading._MainThread):
+            return os.getpid()
+        else:
+            return threading.get_ident()
 
     @staticmethod
     def check_path(tmp_path):
