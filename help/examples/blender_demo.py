@@ -11,9 +11,9 @@ from rayvision_sync.upload import RayvisionUpload
 # API Parameter
 render_para = {
     "domain": "task.renderbus.com",
-    "platform": "2",
-    "access_id": "xxxx",
-    "access_key": "xxxx",
+    "platform": "6",
+    "access_id": "xxxxx",
+    "access_key": "xxxxx",
 }
 
 api = RayvisionAPI(access_id=render_para['access_id'],
@@ -23,9 +23,9 @@ api = RayvisionAPI(access_id=render_para['access_id'],
 
 # Step1:Analyze CG File
 analyze_info = {
-    "cg_file": r"D:\houdini\cg_file\PRAM RENDER 1.blend",
+    "cg_file": r"D:\houdini\cg_file\blender_test.blend",
     "workspace": "c:/workspace",
-    "software_version": "2.81",
+    "software_version": "2.78",
     "project_name": "Project1",
     "plugin_config": {},
     "platform": render_para['platform']
@@ -43,13 +43,10 @@ update_task_info(update_task, analyze_obj.task_json)
 custom_info_to_task = {}
 append_to_task(custom_info_to_task, analyze_obj.task_json)
 
-# User-defined UPLOAD.JSON file path
-upload_json_path = r"D:\blender\upload.json"
-
 custom_info_to_upload = [
-    r"D:\houdini\cg_file\PRAM RENDER 1.blend"
+    r"D:\houdini\cg_file\blender_test.blend"
 ]
-append_to_upload(custom_info_to_upload, upload_json_path)
+append_to_upload(custom_info_to_upload, r"D:\blender\upload.json")
 
 # Step3: Set platform hardware configuration information
 hardware_config = {
@@ -78,7 +75,7 @@ upload_obj = RayvisionUpload(api, automatic_line=True)
 The default of the test demo is to upload json and resource files at the same time,
 and users can choose their own upload method according to the actual situation.
 """
-upload_obj.upload_asset(upload_json_path=upload_json_path)
+upload_obj.upload_asset(upload_json_path=r"D:\blender\upload.json")
 upload_obj.upload_config(str(task_id), list(CONFIG_PATH.values()))
 
 # Step6:Submit Task

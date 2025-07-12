@@ -30,6 +30,6 @@ setup(
         'Programming Language :: Python :: 3',
     ],
     use_scm_version=True,
-    setup_requires=['setuptools_scm'],
+    setup_requires=['setuptools_scm<8.0.0'],
 )
 
